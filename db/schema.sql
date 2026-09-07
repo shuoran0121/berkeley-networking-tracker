@@ -26,17 +26,17 @@ create table if not exists contacts (
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now(),
 
-  -- Layer 3 validation: these hold even for a request that bypasses the
-  -- application's API routes and writes straight to the Data API.
-  constraint contacts_name_not_blank check (length(trim(name)) > 0),
-  constraint contacts_priority_valid check (priority in ('high', 'medium', 'low')),
-
   -- Sorting by `priority` as text gives high -> low -> medium, which is wrong.
   -- PostgREST cannot express a CASE in an ORDER BY, so the ordering is
   -- materialised here as a sortable integer instead.
   priority_rank smallint generated always as (
     case priority when 'high' then 1 when 'medium' then 2 else 3 end
-  ) stored
+  ) stored,
+
+  -- Layer 3 validation: these hold even for a request that bypasses the
+  -- application's API routes and writes straight to the Data API.
+  constraint contacts_name_not_blank check (length(trim(name)) > 0),
+  constraint contacts_priority_valid check (priority in ('high', 'medium', 'low'))
 );
 
 create index if not exists contacts_user_id_idx  on contacts (user_id);
