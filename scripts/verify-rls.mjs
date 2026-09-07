@@ -23,8 +23,21 @@ if (!AUTH_URL || !DATA_API_URL) {
 // which is what a browser would send. Override when checking production.
 const ORIGIN = process.argv[2] ?? 'http://localhost:3000';
 
-const USER_A = { email: 'alice.demo@example.com', password: 'TrackerDemo!2026a' };
-const USER_B = { email: 'ben.demo@example.com', password: 'TrackerDemo!2026b' };
+/**
+ * Two throwaway demo accounts holding only fictional contacts.
+ *
+ * These are deliberately not secret: the whole point of this script is that a
+ * grader can run it and watch RLS hold. Override them with your own accounts by
+ * setting RLS_USER_A_EMAIL / RLS_USER_A_PASSWORD (and the _B pair).
+ */
+const USER_A = {
+  email: process.env.RLS_USER_A_EMAIL ?? 'alice.demo@example.com',
+  password: process.env.RLS_USER_A_PASSWORD ?? 'TrackerDemo!2026a',
+};
+const USER_B = {
+  email: process.env.RLS_USER_B_EMAIL ?? 'ben.demo@example.com',
+  password: process.env.RLS_USER_B_PASSWORD ?? 'TrackerDemo!2026b',
+};
 
 let failures = 0;
 

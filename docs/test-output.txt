@@ -1,0 +1,7 @@
+> berkeley-networking-tracker@0.1.0 test
+> vitest run
+ RUN  v4.1.11 C:/Users/shuor/AppData/Local/Packages/Claude_pzs8sxrjxfjjc/LocalCache/Roaming/Claude/scratch-workspaces/8d80e470-5471-42e2-9c0e-70dc4c1d7398/05f9194f-b20b-495e-85da-4d91635eb841/scratch-2026-09-07-b10b22
+ Test Files  3 passed (3)
+      Tests  49 passed (49)
+   Start at  11:59:56
+   Duration  2.19s (transform 79ms, setup 0ms, import 356ms, tests 19ms, environment 0ms)

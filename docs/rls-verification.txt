@@ -1,0 +1,25 @@
+Verifying Row Level Security against the live Data API
+
+Signed in as alice.demo@example.com and ben.demo@example.com
+
+Baseline — each user reads the same unfiltered endpoint:
+  [PASS] Alice sees her own contacts — 4 rows
+  [PASS] Ben sees his own contacts — 1 rows
+  [PASS] Their result sets do not overlap at all — 0 shared rows
+
+SELECT policy — Ben targets one of Alice's rows by id:
+  [PASS] Ben cannot read Alice's row #17 — returned 0 rows
+
+UPDATE policy (USING) — Ben tries to edit that row:
+  [PASS] Ben's UPDATE matches zero rows — returned 0 rows
+
+INSERT policy (WITH CHECK) — Ben tries to create a row owned by Alice:
+  [PASS] The insert is rejected outright — HTTP 403 (new row violates row-level security policy for table "contacts")
+
+UPDATE policy (WITH CHECK) — Ben tries to hand his own row to Alice:
+  [PASS] Reassigning ownership is rejected — HTTP 403 (new row violates row-level security policy for table "contacts")
+
+No token at all:
+  [PASS] An unauthenticated request reads nothing — HTTP 400
+
+All RLS checks passed.
