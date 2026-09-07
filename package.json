@@ -9,7 +9,11 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:push": "node --env-file=.env.local scripts/apply-schema.mjs",
+    "db:reset-demo": "node --env-file=.env.local scripts/reset-demo-data.mjs",
+    "verify:rls": "node --env-file=.env.local scripts/verify-rls.mjs",
+    "capture:evidence": "node scripts/capture-evidence.mjs"
   },
   "dependencies": {
     "@neondatabase/auth": "^0.5.0-beta",
@@ -30,10 +34,13 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
+    "pg": "^8.23.0",
+    "playwright": "^1.63.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.11"
