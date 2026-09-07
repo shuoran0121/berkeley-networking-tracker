@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Tests
+        run: npm test
+
+      # Build with placeholder public URLs: the app must compile without a
+      # real Neon project, and no secret is needed to prove it.
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_NEON_AUTH_URL: https://example.neonauth.us-east-1.aws.neon.tech/neondb/auth
+          NEXT_PUBLIC_NEON_DATA_API_URL: https://example.apirest.us-east-1.aws.neon.tech/neondb/rest/v1
